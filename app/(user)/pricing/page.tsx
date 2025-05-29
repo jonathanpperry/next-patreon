@@ -1,4 +1,4 @@
-import PricingTitle from "@/components/PricingTitle";
+import PricingTitle from "@/app/(user)/pricing/PricingTitle";
 import SchematicWrapper from "@/components/Schematic/SchematicWrapper";
 
 function PricingPage() {
@@ -12,7 +12,6 @@ function PricingPage() {
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-t from-gray-50 to-white">
       <div className="max-w-6xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-        {/* Pricing title */}
         <PricingTitle />
 
         <div className="bg-white rounded-2xl shadow-xl p-8">
