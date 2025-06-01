@@ -3,7 +3,7 @@ export const apiVersion =
 
 export const dataset = assertValue(
   process.env.SANITY_STUDIO_SANITY_DATASET ||
-    process.env.SANITY_STUDIO_SANITY_DATASET,
+    process.env.NEXT_PUBLIC_SANITY_DATASET,
   "Missing environment variable: NEXT_PUBLIC_SANITY_DATASET or SANITY_STUDIO_SANITY_DATASET"
 );
 

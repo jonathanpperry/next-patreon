@@ -74,6 +74,77 @@ export type Slug = {
   source?: string;
 };
 
+export type Message = {
+  _id: string;
+  _type: "message";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  senderName?: string;
+  senderEmail?: string;
+  messageBody?: string;
+  isRead?: boolean;
+};
+
+export type Comment = {
+  _id: string;
+  _type: "comment";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  post?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "post";
+  };
+  name?: string;
+  userImageUrl?: string;
+  email?: string;
+  comment?: string;
+};
+
+export type Post = {
+  _id: string;
+  _type: "post";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  tierAccess?: "backstage" | "crew" | "vip";
+  coverImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+};
+
 export type SiteSettings = {
   _id: string;
   _type: "siteSettings";
@@ -121,7 +192,7 @@ export type SiteSettings = {
     alt?: string;
     _type: "image";
   };
-  socialMediaLinks?: Array<{
+  socials?: Array<{
     platform?: string;
     url?: string;
     _type: "socialLink";
@@ -187,8 +258,112 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | SiteSettings | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Message | Comment | Post | SiteSettings | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./sanity/lib/post/getPosts.ts
+// Variable: getPostsQuery
+// Query: *[_type == "post"] | order(_createdAt desc) {    ...,    "comments": *[_type == "comment" && post._ref == ^._id] | order(createdAt desc)        }
+export type GetPostsQueryResult = Array<{
+  _id: string;
+  _type: "post";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  tierAccess?: "backstage" | "crew" | "vip";
+  coverImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  comments: Array<{
+    _id: string;
+    _type: "comment";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    post?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "post";
+    };
+    name?: string;
+    userImageUrl?: string;
+    email?: string;
+    comment?: string;
+  }>;
+}>;
+// Variable: getPostsQueryWithTier
+// Query: *[_type == "post" && tierAccess == $tier] | order(_createdAt desc) {    ...,    "comments": *[_type == "comment" && post.ref == ^._id] | order(createdAt desc)        }
+export type GetPostsQueryWithTierResult = Array<{
+  _id: string;
+  _type: "post";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  tierAccess?: "backstage" | "crew" | "vip";
+  coverImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  comments: Array<never>;
+}>;
+
 // Source: ./sanity/lib/siteSettings/getSiteSettings.ts
 // Variable: siteSettingsQuery
 // Query: *[_type == "siteSettings"][0]{    ...,    mainHeroImage{        ...,        asset->{            _id,            url          }        },    }
@@ -237,7 +412,7 @@ export type SiteSettingsQueryResult = {
     alt?: string;
     _type: "image";
   };
-  socialMediaLinks?: Array<{
+  socials?: Array<{
     platform?: string;
     url?: string;
     _type: "socialLink";
@@ -250,6 +425,8 @@ export type SiteSettingsQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "*[_type == \"post\"] | order(_createdAt desc) {\n    ...,\n    \"comments\": *[_type == \"comment\" && post._ref == ^._id] | order(createdAt desc)    \n    } ": GetPostsQueryResult;
+    "*[_type == \"post\" && tierAccess == $tier] | order(_createdAt desc) {\n    ...,\n    \"comments\": *[_type == \"comment\" && post.ref == ^._id] | order(createdAt desc)    \n    } ": GetPostsQueryWithTierResult;
     "*[_type == \"siteSettings\"][0]{\n    ...,\n    mainHeroImage{\n        ...,\n        asset->{\n            _id,\n            url\n          }\n        },\n    }": SiteSettingsQueryResult;
   }
 }

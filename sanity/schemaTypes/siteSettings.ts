@@ -85,7 +85,7 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     },
     defineField({
-      name: "socialMediaLinks",
+      name: "socials",
       title: "Social Media Links",
       type: "array",
       description: "Links to your social media profiles",
