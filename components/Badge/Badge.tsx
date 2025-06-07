@@ -32,6 +32,18 @@ function Badge({ variant = "simple", tier, link, className }: BadgeProps) {
       </Link>
     );
   }
+
+  return (
+    <p
+      className={`
+        ${baseStyles}
+        ${badgeColor}
+        ${className}
+        `}
+    >
+      {label}
+    </p>
+  );
 }
 
 export default Badge;

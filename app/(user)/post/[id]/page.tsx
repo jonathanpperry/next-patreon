@@ -13,6 +13,7 @@ async function PostPage({ params }: { params: Promise<{ id: string }> }) {
 
   const post = await getPost(id);
   if (!post) return notFound();
+  console.log("post tier access:", post.tierAccess);
 
   return (
     <main className="min-h-screen bg-white">
