@@ -1122,7 +1122,49 @@
               "platform": {
                 "type": "objectAttribute",
                 "value": {
-                  "type": "string"
+                  "type": "union",
+                  "of": [
+                    {
+                      "type": "string",
+                      "value": "instagram"
+                    },
+                    {
+                      "type": "string",
+                      "value": "youtube"
+                    },
+                    {
+                      "type": "string",
+                      "value": "facebook"
+                    },
+                    {
+                      "type": "string",
+                      "value": "twitter"
+                    },
+                    {
+                      "type": "string",
+                      "value": "tikTok"
+                    },
+                    {
+                      "type": "string",
+                      "value": "pinterest"
+                    },
+                    {
+                      "type": "string",
+                      "value": "github"
+                    },
+                    {
+                      "type": "string",
+                      "value": "discord"
+                    },
+                    {
+                      "type": "string",
+                      "value": "twitch"
+                    },
+                    {
+                      "type": "string",
+                      "value": "other"
+                    }
+                  ]
                 },
                 "optional": true
               },

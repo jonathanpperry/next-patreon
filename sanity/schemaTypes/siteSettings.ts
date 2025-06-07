@@ -88,14 +88,42 @@ export default defineType({
       name: "socials",
       title: "Social Media Links",
       type: "array",
-      description: "Links to your social media profiles",
+      description:
+        "Add your social media profiles for visitors to connect with you",
       of: [
         defineArrayMember({
           type: "object",
           name: "socialLink",
           fields: [
-            { name: "platform", title: "Platform", type: "string" },
-            { name: "url", title: "URL", type: "url" },
+            defineField({
+              name: "platform",
+              title: "Platform",
+              type: "string",
+              description:
+                "The social media platform (e.g., Twitter, Instagram, YouTube",
+              options: {
+                list: [
+                  { title: "Instagram", value: "instagram" },
+                  { title: "YouTube", value: "youtube" },
+                  { title: "Facebook", value: "facebook" },
+                  { title: "X", value: "twitter" },
+                  { title: "TikTok", value: "tikTok" },
+                  { title: "Pinterest", value: "pinterest" },
+                  { title: "GitHub", value: "github" },
+                  { title: "Discord", value: "discord" },
+                  { title: "Twitch", value: "twitch" },
+                  { title: "Other", value: "other" },
+                ],
+              },
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "url",
+              title: "URL",
+              type: "url",
+              description: "The full URL to your profile on this platform",
+              validation: (Rule) => Rule.required(),
+            }),
           ],
         }),
       ],

@@ -193,7 +193,7 @@ export type SiteSettings = {
     _type: "image";
   };
   socials?: Array<{
-    platform?: string;
+    platform?: "instagram" | "youtube" | "facebook" | "twitter" | "tikTok" | "pinterest" | "github" | "discord" | "twitch" | "other";
     url?: string;
     _type: "socialLink";
     _key: string;
@@ -413,7 +413,7 @@ export type SiteSettingsQueryResult = {
     _type: "image";
   };
   socials?: Array<{
-    platform?: string;
+    platform?: "discord" | "facebook" | "github" | "instagram" | "other" | "pinterest" | "tikTok" | "twitch" | "twitter" | "youtube";
     url?: string;
     _type: "socialLink";
     _key: string;
