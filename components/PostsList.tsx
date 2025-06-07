@@ -1,9 +1,9 @@
 import { GetPostsQueryResult } from "@/sanity.types";
 import { getSiteSettings } from "@/sanity/lib/siteSettings/getSiteSettings";
-import Post from "@/sanity/schemaTypes/post";
 import { ClerkLoaded } from "@clerk/nextjs";
 import React from "react";
 import FilterByTierSelect from "./FilterByTierSelect";
+import Post from "./Post";
 
 async function PostsList({ posts }: { posts: GetPostsQueryResult }) {
   const siteSettings = await getSiteSettings();
@@ -19,13 +19,13 @@ async function PostsList({ posts }: { posts: GetPostsQueryResult }) {
           <FilterByTierSelect />
         </div>
 
-        {/* <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           <ClerkLoaded>
             {posts.map((post) => (
               <Post key={post._id} post={post} />
             ))}
           </ClerkLoaded>
-        </div> */}
+        </div>
       </div>
     </section>
   );
