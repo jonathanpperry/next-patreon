@@ -5,13 +5,14 @@ import { useUser } from "@clerk/nextjs";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
+import { MessageCircleIcon } from "lucide-react";
+import TimeAgo from "react-timeago";
 
 import LockedPost from "./LockedPost";
 import { GetPostsQueryResult } from "@/sanity.types";
 import { TierAccess, tierMap } from "@/types/types";
 import useMembershipTier from "@/hooks/useMembershipTier";
 import Badge from "./Badge/Badge";
-import { MessageCircleIcon } from "lucide-react";
 
 function Post({ post }: { post: GetPostsQueryResult[number] }) {
   const membershipTier = useMembershipTier();
@@ -58,7 +59,7 @@ function Post({ post }: { post: GetPostsQueryResult[number] }) {
               src={urlFor(post.coverImage).url()}
               alt={post.coverImage?.alt || post.title || "Post cover image"}
               fill
-              className="object-contain group-hover:scale-105 transition-all duration-300"
+              className="object-cover group-hover:scale-105 transition-all duration-300"
             />
           </div>
         )}
@@ -88,7 +89,7 @@ function Post({ post }: { post: GetPostsQueryResult[number] }) {
           </div>
 
           <div className="text-right text-sm text-gray-500">
-            {/* <TimeAgo date={post._createdAt} /> */}
+            <TimeAgo date={post._createdAt} />
           </div>
         </div>
       </article>

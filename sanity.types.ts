@@ -260,6 +260,67 @@ export type SanityImageMetadata = {
 
 export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Message | Comment | Post | SiteSettings | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./sanity/lib/post/getPost.ts
+// Variable: getPostQuery
+// Query: *[_type == "post" && _id == $id][0] {    ...,    "comments": *[_type == "comment" && post._ref == ^._id] | order(createdAt desc)    }
+export type GetPostQueryResult = {
+  _id: string;
+  _type: "post";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  body?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  tierAccess?: "backstage" | "crew" | "vip";
+  coverImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  comments: Array<{
+    _id: string;
+    _type: "comment";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    post?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "post";
+    };
+    name?: string;
+    userImageUrl?: string;
+    email?: string;
+    comment?: string;
+  }>;
+} | null;
+
 // Source: ./sanity/lib/post/getPosts.ts
 // Variable: getPostsQuery
 // Query: *[_type == "post"] | order(_createdAt desc) {    ...,    "comments": *[_type == "comment" && post._ref == ^._id] | order(createdAt desc)        }
@@ -425,6 +486,7 @@ export type SiteSettingsQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "*[_type == \"post\" && _id == $id][0] {\n    ...,\n    \"comments\": *[_type == \"comment\" && post._ref == ^._id] | order(createdAt desc)\n    }": GetPostQueryResult;
     "*[_type == \"post\"] | order(_createdAt desc) {\n    ...,\n    \"comments\": *[_type == \"comment\" && post._ref == ^._id] | order(createdAt desc)    \n    } ": GetPostsQueryResult;
     "*[_type == \"post\" && tierAccess == $tier] | order(_createdAt desc) {\n    ...,\n    \"comments\": *[_type == \"comment\" && post.ref == ^._id] | order(createdAt desc)    \n    } ": GetPostsQueryWithTierResult;
     "*[_type == \"siteSettings\"][0]{\n    ...,\n    mainHeroImage{\n        ...,\n        asset->{\n            _id,\n            url\n          }\n        },\n    }": SiteSettingsQueryResult;
