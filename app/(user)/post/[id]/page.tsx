@@ -7,13 +7,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText } from "@portabletext/react";
+import Comments from "@/components/Comments";
 
 async function PostPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
   const post = await getPost(id);
   if (!post) return notFound();
-  console.log("post tier access:", post.tierAccess);
 
   return (
     <main className="min-h-screen bg-white">
@@ -80,7 +80,7 @@ async function PostPage({ params }: { params: Promise<{ id: string }> }) {
       <hr />
 
       <div className="max-w-3xl mx-auto px-4 py-12">
-        {/* <Comments post={post} /> */}
+        <Comments post={post} />
       </div>
     </main>
   );
