@@ -1,9 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import useMembershipTier from "@/hooks/useMembershipTier";
-import { getTierFromLevel } from "@/types/types";
 import { useUser } from "@clerk/nextjs";
 import {
   useSchematicEntitlement,
@@ -13,17 +9,22 @@ import { Loader2, MessageCircleIcon, SendIcon } from "lucide-react";
 import React, { useState, useTransition } from "react";
 import { toast } from "sonner";
 
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import useMembershipTier from "@/hooks/useMembershipTier";
+import { getTierFromLevel } from "@/types/types";
+import { sendMessage } from "@/actions/sendMessage";
+
 function MessagePage() {
   const { user, isLoaded } = useUser();
   const membershipTier = useMembershipTier();
   const [message, setMessage] = useState("");
   const [isSending, startTransition] = useTransition();
   const schematicIsPending = useSchematicIsPending();
-  const { featureUsageExceeded } = useSchematicEntitlement("send-dm");
+  const { featureUsageExceeded } = useSchematicEntitlement("send-message");
 
   // Check if user is VIP
   const tier = membershipTier ? getTierFromLevel(membershipTier) : null;
-  const isVip = tier === "vip";
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
