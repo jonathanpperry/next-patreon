@@ -24,7 +24,7 @@ function MessagePage() {
   const { featureUsageExceeded } = useSchematicEntitlement("send-message");
 
   // Check if user is VIP
-  const tier = membershipTier ? getTierFromLevel(membershipTier) : null;
+  // const tier = membershipTier ? getTierFromLevel(membershipTier) : null;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
